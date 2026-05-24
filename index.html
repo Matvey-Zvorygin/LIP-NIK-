@@ -1,7 +1,994 @@
 <!DOCTYPE html>
-<html>
-<head><title>LIP-NIK</title></head>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIP-NIK — Никотиновая помада нового поколения</title>
+<meta name="description" content="Первый российский медицинский препарат для отказа от курения в формате помады. НЗТ нового поколения для женщин.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #C8566A;
+    --rose-light: #E8A0AD;
+    --rose-pale: #F5E6E9;
+    --cream: #FAF7F4;
+    --warm-white: #FDFCFB;
+    --charcoal: #2A2320;
+    --muted: #8C7B78;
+    --border: #E8DDD9;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 48px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(253, 252, 251, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--rose); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--charcoal); }
+
+  .nav-cta {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--rose);
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--charcoal); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px 80px 80px;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 360px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-white);
+    background: var(--rose);
+    padding: 14px 32px;
+    border: 1px solid var(--rose);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+  }
+
+  .btn-outline {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    background: transparent;
+    padding: 14px 32px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--charcoal);
+  }
+
+  .hero-right {
+    background: var(--rose-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(200, 86, 106, 0.08);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .lipstick-wrap {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.5s forwards;
+  }
+
+  .lipstick-svg {
+    width: 120px;
+    filter: drop-shadow(0 24px 48px rgba(200, 86, 106, 0.25));
+    transition: transform 0.3s ease;
+  }
+
+  .lipstick-wrap:hover .lipstick-svg {
+    transform: translateY(-8px);
+  }
+
+  .lipstick-cap-g {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom center;
+  }
+
+  .lipstick-wrap.open .lipstick-cap-g {
+    transform: translateY(-80px) rotate(-20deg);
+  }
+
+  .hero-hint {
+    position: absolute;
+    bottom: 40px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose-light);
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--charcoal);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0;
+  }
+
+  .stat-item {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--rose-light);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  section { padding: 120px 80px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 24px;
+    max-width: 600px;
+  }
+
+  .section-title em { font-style: italic; color: var(--rose); }
+
+  .section-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 560px;
+  }
+
+  /* PROBLEM */
+  .problem {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .problem-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .prob-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+  }
+
+  .prob-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--rose);
+    margin-bottom: 8px;
+  }
+
+  .prob-text {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+  }
+
+  /* PRODUCT */
+  .product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .product-visual {
+    background: var(--rose-pale);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-visual::after {
+    content: 'LIP·NIK';
+    font-family: var(--serif);
+    font-size: 80px;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: rgba(200, 86, 106, 0.12);
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  .product-placeholder {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--rose-light);
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    line-height: 2;
+  }
+
+  .features-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .feature-item:last-child { border-bottom: none; }
+
+  .feature-num {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--rose-light);
+    font-weight: 300;
+    min-width: 32px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .feature-content h4 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    color: var(--charcoal);
+  }
+
+  .feature-content p {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* STEPS */
+  .steps {
+    background: var(--cream);
+    text-align: center;
+  }
+
+  .steps-header {
+    max-width: 560px;
+    margin: 0 auto 64px;
+  }
+
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+  }
+
+  .step {
+    padding: 56px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .step:hover { background: var(--warm-white); }
+  .step:last-child { border-right: none; }
+
+  .step-dose {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .step:nth-child(1) .step-dose { color: var(--rose); }
+  .step:nth-child(2) .step-dose { color: var(--rose-light); }
+  .step:nth-child(3) .step-dose { color: var(--border); }
+
+  .step-phase {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .step-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--border);
+    margin: 16px auto;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .step-note {
+    margin-top: 48px;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .step-note strong {
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  /* RECOGNITION */
+  .recognition {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .recognition-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .rec-card {
+    border: 1px solid var(--border);
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+
+  .rec-card:hover { border-color: var(--rose-light); }
+
+  .rec-card-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 12px;
+  }
+
+  .rec-card-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  .rec-card-text {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .quote-block {
+    background: var(--rose-pale);
+    padding: 48px;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-family: var(--serif);
+    font-size: 80px;
+    color: var(--rose-light);
+    line-height: 0.5;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .quote-text {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--charcoal);
+    margin-bottom: 24px;
+  }
+
+  .quote-author {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* PREORDER */
+  .preorder {
+    background: var(--charcoal);
+    text-align: center;
+    padding: 120px 80px;
+  }
+
+  .preorder .section-eyebrow { color: var(--rose-light); }
+
+  .preorder .section-title {
+    color: var(--warm-white);
+    margin: 0 auto 16px;
+  }
+
+  .preorder-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  .preorder-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto 24px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .preorder-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 16px 24px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--warm-white);
+    letter-spacing: 0.5px;
+  }
+
+  .preorder-input::placeholder { color: rgba(255,255,255,0.25); }
+
+  .preorder-submit {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    background: var(--rose-light);
+    border: none;
+    padding: 16px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .preorder-submit:hover { background: var(--warm-white); }
+
+  .preorder-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--warm-white);
+    border-top: 1px solid var(--border);
+    padding: 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    color: var(--charcoal);
+  }
+
+  .footer-logo span { color: var(--rose); }
+
+  .footer-center {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  .footer-right {
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .footer-right a {
+    color: var(--rose);
+    text-decoration: none;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 24px 48px; }
+    .hero-right { min-height: 320px; }
+
+    .stats-strip { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 36px 24px; }
+
+    section { padding: 72px 24px; }
+
+    .problem, .product, .recognition {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .problem-cards { grid-template-columns: 1fr 1fr; }
+
+    .steps-row { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+
+    .preorder { padding: 72px 24px; }
+    .preorder-form { flex-direction: column; border: none; gap: 12px; }
+    .preorder-input { border: 1px solid rgba(255,255,255,0.15); }
+
+    footer { grid-template-columns: 1fr; text-align: center; gap: 16px; padding: 40px 24px; }
+    .footer-right { text-align: center; }
+  }
+</style>
+</head>
 <body>
-<h1>Скоро здесь будет сайт LIP-NIK</h1>
+
+<nav>
+  <a href="#" class="nav-logo">LIP<span>·</span>NIK</a>
+  <ul class="nav-links">
+    <li><a href="#product">Продукт</a></li>
+    <li><a href="#how">Как работает</a></li>
+    <li><a href="#recognition">О проекте</a></li>
+  </ul>
+  <a href="#preorder" class="nav-cta">Предзаказ</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Первый российский медицинский препарат</p>
+    <h1 class="hero-title">Бросить курить —<br>теперь <em>по-женски</em></h1>
+    <p class="hero-subtitle">Никотиновая помада нового поколения. Заместительная терапия, которая работает с физической и психологической зависимостью одновременно.</p>
+    <div class="hero-btns">
+      <a href="#preorder" class="btn-primary">Оставить предзаказ</a>
+      <a href="#product" class="btn-outline">Узнать больше</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="lipstick-wrap" id="lipstick" onclick="this.classList.toggle('open')" title="нажмите">
+      <svg class="lipstick-svg" viewBox="0 0 120 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g class="lipstick-cap-g" id="cap">
+          <rect x="20" y="120" width="80" height="100" rx="4" fill="#2A2320"/>
+          <rect x="24" y="124" width="72" height="92" rx="2" fill="#3A3330"/>
+          <rect x="44" y="140" width="32" height="2" rx="1" fill="rgba(255,255,255,0.1)"/>
+          <text x="60" y="178" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="rgba(255,255,255,0.35)" letter-spacing="2">LIP·NIK</text>
+        </g>
+        <rect x="28" y="220" width="64" height="52" rx="3" fill="#8B1A30"/>
+        <rect x="28" y="220" width="64" height="8" fill="#A0223A"/>
+        <rect x="32" y="228" width="56" height="40" rx="1" fill="#9B1F35"/>
+        <path d="M38 220 L82 220 L78 200 L42 200 Z" fill="#C8566A"/>
+        <path d="M42 200 L78 200 L72 180 L48 180 Z" fill="#D4607A"/>
+        <path d="M48 180 L72 180 L66 165 L54 165 Z" fill="#E07088"/>
+        <path d="M54 165 L66 165 L60 155 Z" fill="#E8849A"/>
+        <rect x="28" y="268" width="64" height="8" rx="2" fill="#1A1210"/>
+      </svg>
+    </div>
+    <p class="hero-hint">↑ нажмите на помаду</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item reveal">
+    <div class="stat-num">10 млн</div>
+    <div class="stat-label">Курящих женщин<br>в России</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">×2</div>
+    <div class="stat-label">Рост за последние<br>15 лет</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">5 000 ₽</div>
+    <div class="stat-label">Полный курс<br>на 3 месяца</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="reveal">
+    <p class="section-eyebrow">Проблема</p>
+    <h2 class="section-title">Существующие средства<br>не <em>работают</em></h2>
+    <p class="section-body">Пластыри и жвачки закрывают только физическую зависимость. Ритуал курения, моторная привычка — остаются. Именно поэтому вейп победил: он дал форму. LIP-NIK даёт лучшую форму.</p>
+  </div>
+  <div class="problem-cards reveal">
+    <div class="prob-card">
+      <div class="prob-num">50%</div>
+      <div class="prob-text">выше риск инсульта у курящих женщин</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num">83%</div>
+      <div class="prob-text">выше риск бесплодия</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num">2.5×</div>
+      <div class="prob-text">выше риск онкологии репродуктивной системы</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num">3×</div>
+      <div class="prob-text">выше риск хронического бронхита</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="product" id="product" style="background: var(--warm-white);">
+  <div class="product-visual reveal">
+    <div class="product-placeholder">
+      Фото продукта<br>скоро здесь
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="section-eyebrow">Решение</p>
+    <h2 class="section-title">LIP-NIK — медпрепарат,<br>не просто <em>косметика</em></h2>
+    <p class="section-body">Никотин доставляется через слизистую губ за 5–7 минут. Гипоаллергенная база из пчелиного воска, масла ши и гиалуроновой кислоты.</p>
+    <div class="features-list">
+      <div class="feature-item">
+        <span class="feature-num">01</span>
+        <div class="feature-content">
+          <h4>Двойное действие</h4>
+          <p>Закрывает и физическую, и психологическую зависимость — ритуал остаётся, никотин снижается.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-num">02</span>
+        <div class="feature-content">
+          <h4>Медицинский статус</h4>
+          <p>НЗТ нового формата. Одобрено Минздравом Свердловской области. Патент в процессе.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-num">03</span>
+        <div class="feature-content">
+          <h4>Российское производство</h4>
+          <p>Разработка совместно с РОС-Химия — 30 лет в косметической химии, собственная лаборатория.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps" id="how">
+  <div class="steps-header reveal">
+    <p class="section-eyebrow">Как работает</p>
+    <h2 class="section-title" style="margin: 0 auto 16px;">Трёхступенчатая<br>система <em>отказа</em></h2>
+    <p class="section-body" style="margin: 0 auto;">Курс рассчитан на три месяца. Каждый этап — отдельная помада с точной дозировкой никотина.</p>
+  </div>
+  <div class="steps-row reveal">
+    <div class="step">
+      <div class="step-dose">4 мг</div>
+      <div class="step-phase">Старт · 1-й месяц</div>
+      <div class="step-divider"></div>
+      <div class="step-desc">Высокая доза. Замещаем сигарету полностью. Тело получает никотин привычным способом.</div>
+    </div>
+    <div class="step">
+      <div class="step-dose">2 мг</div>
+      <div class="step-phase">Снижение · 2-й месяц</div>
+      <div class="step-divider"></div>
+      <div class="step-desc">Средняя доза. Организм постепенно адаптируется к меньшему количеству никотина.</div>
+    </div>
+    <div class="step">
+      <div class="step-dose">0 мг</div>
+      <div class="step-phase">Финиш · 3-й месяц</div>
+      <div class="step-divider"></div>
+      <div class="step-desc">Без никотина. Ритуал сохраняется, зависимость — нет. Свобода.</div>
+    </div>
+  </div>
+  <p class="step-note reveal">Полный курс — <strong>5 000 ₽</strong>. Ниже импортных аналогов (6–7 тыс. ₽). Всасывание за <strong>5–7 минут</strong>.</p>
+</section>
+
+<!-- RECOGNITION -->
+<section class="recognition" id="recognition" style="background: var(--warm-white);">
+  <div class="reveal">
+    <p class="section-eyebrow">Признание</p>
+    <h2 class="section-title">Проект<br>государственного <em>масштаба</em></h2>
+    <p class="section-body">LIP-NIK уже получил официальное признание на уровне региональных министерств и рассматривается как инструмент реализации трёх нацпроектов.</p>
+    <div class="quote-block" style="margin-top: 40px;">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">Идея создания антиникотиновой помады LIP NIK как средства борьбы с никотиновой зависимостью признана перспективной.</p>
+      <p class="quote-author">Минздрав Свердловской области · Письмо №03-02-05/10306</p>
+    </div>
+  </div>
+  <div class="recognition-cards reveal">
+    <div class="rec-card">
+      <div class="rec-card-tag">Нацпроект 01</div>
+      <div class="rec-card-title">«Семья»</div>
+      <div class="rec-card-text">Снижение курения среди женщин 18–35 = рост рождаемости. Федпроект «Охрана материнства и детства».</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-card-tag">Нацпроект 02</div>
+      <div class="rec-card-title">«Продолжительная жизнь»</div>
+      <div class="rec-card-text">Цель государства — 78 лет к 2030 году. Курение — ключевой барьер. LIP-NIK — инструмент его устранения.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-card-tag">Нацпроект 03</div>
+      <div class="rec-card-title">«Новые технологии здоровья»</div>
+      <div class="rec-card-text">Первый отечественный медпрепарат НЗТ. Технологический суверенитет в фармацевтике.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-card-tag">Партнёр</div>
+      <div class="rec-card-title">РОС-Химия</div>
+      <div class="rec-card-text">30 лет опыта. Собственная лаборатория биологии кожи. Клиенты — Unilever, Avon, Oriflame.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREORDER -->
+<section class="preorder" id="preorder">
+  <p class="section-eyebrow reveal">Предзаказ</p>
+  <h2 class="section-title reveal">Хочу первой<br>узнать о <em>запуске</em></h2>
+  <p class="preorder-sub reveal">Оставь email — сообщим о старте продаж и предложим<br>специальные условия для первых.</p>
+  <form class="preorder-form reveal" onsubmit="handleSubmit(event)">
+    <input class="preorder-input" type="email" placeholder="ваш email" required id="emailInput">
+    <button class="preorder-submit" type="submit">Записаться</button>
+  </form>
+  <p class="preorder-note reveal" id="formNote">Никакого спама. Только важное.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LIP<span>·</span>NIK</div>
+  <div class="footer-center">© 2025 LIP-NIK. Все права защищены.<br>Свердловская область, Россия</div>
+  <div class="footer-right">
+    <a href="mailto:zvotmat@gmail.com">zvotmat@gmail.com</a><br>
+    +7 922 196-20-36
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailInput').value;
+    const note = document.getElementById('formNote');
+    note.textContent = '✓ Готово! Сообщим о запуске первыми.';
+    note.style.color = 'rgba(232, 160, 173, 0.9)';
+    document.getElementById('emailInput').value = '';
+  }
+</script>
 </body>
 </html>
