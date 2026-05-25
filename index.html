@@ -13,7 +13,7 @@
 :root{
   --green:#3D7A55;
   --green-light:#5FA676;
-  --green-pale:#EBF4EE
+  --green-pale:#EBF4EE;
   --green-dark:#2A5540;
   --rose:#C45C72;
   --rose-pale:#F7EDF0;
@@ -98,10 +98,8 @@ section{padding:112px 80px}
 .section-body{font-size:16px;font-weight:300;line-height:1.85;color:var(--muted)}
 
 /* ── PRODUCT ── */
-.product-section{background:var(--cream);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.product-visual{background:var(--green-pale);aspect-ratio:3/4;max-width:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px dashed rgba(61,122,85,.3);position:relative;overflow:hidden}
-.product-visual::before{content:'LIP·NIK';font-family:var(--serif);font-size:60px;font-weight:300;color:rgba(61,122,85,.08);letter-spacing:4px;position:absolute;white-space:nowrap}
-.product-visual-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;text-align:center;line-height:2}
+.product-section{background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center} 
+.product-visual{background:transparent;width:100%;}
 .how-steps{display:flex;flex-direction:column;gap:0;margin-top:40px}
 .how-step{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--border);align-items:flex-start;transition:background .2s}
 .how-step:last-child{border-bottom:none}
@@ -277,7 +275,7 @@ footer{background:var(--charcoal);border-top:1px solid rgba(255,255,255,0.06);pa
   <div class="hero-left">
     <p class="hero-eyebrow">Первый российский медицинский препарат</p>
     <h1 class="hero-title">Бросить курить —<br>теперь <span class="accent">по-женски</span></h1>
-    <p class="hero-subtitle">Никотиновая помада нового поколения. НЗТ, которая работает с телом и с ритуалом одновременно.</p>
+    <p class="hero-subtitle">Никотиновая помада нового поколения. Никотинозаместительная терапия, которая работает с зависимостью и ритуалом одновременно.</p>
     <div class="hero-btns">
       <a href="#preorder" class="btn-primary">Оставить предзаказ</a>
       <a href="#product" class="btn-outline">Как это работает</a>
@@ -326,7 +324,7 @@ footer{background:var(--charcoal);border-top:1px solid rgba(255,255,255,0.06);pa
 <section class="product-section" id="product">
   <div class="reveal">
     <div class="product-visual">
-      <img src="photoprod.png" alt="LIP-NIK продукт" style="width:100%;height:100%;object-fit:cover;">
+      <img src="photoprod.png" alt="LIP-NIK продукт" style="width:100%;height:auto;object-fit:contain;display:block;">
     </div>
   </div>
   <div class="reveal">
