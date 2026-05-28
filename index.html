@@ -336,6 +336,7 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
     <li><a href="#how">Как работает</a></li>
     <li><a href="#recognition">Признание</a></li>
     <li><a href="#invest">Инвесторам</a></li>
+    <li><a href="story.html">Наша история</a></li>
   </ul>
   <a href="#preorder" class="nav-btn">Предзаказ</a>
 </nav>
@@ -683,7 +684,7 @@ ham.className = 'ham';
 ham.innerHTML = '<span></span><span></span><span></span>';
 const mmenu = document.createElement('div');
 mmenu.className = 'mmenu';
-mmenu.innerHTML = `<a href="#product">Продукт</a><a href="#how">Как работает</a><a href="#recognition">Признание</a><a href="#invest">Инвесторам</a><a href="#preorder" class="mm-cta">Предзаказ →</a>`;
+mmenu.innerHTML = `<a href="#product">Продукт</a><a href="#how">Как работает</a><a href="#recognition">Признание</a><a href="#invest">Инвесторам</a><a href="story.html">Наша история</a><a href="#preorder" class="mm-cta">Предзаказ →</a>`;
 navEl.appendChild(ham);
 navEl.insertAdjacentElement('afterend', mmenu);
 ham.addEventListener('click', () => { ham.classList.toggle('open'); mmenu.classList.toggle('open'); });
