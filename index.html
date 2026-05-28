@@ -560,7 +560,8 @@ document.querySelectorAll('.reveal').forEach(r=>revObs.observe(r));
 
 
 // PREORDER
-const SHEET_URL='YOUR_GOOGLE_SCRIPT_URL';
+const TG_TOKEN='8697074188:AAEYUNWedE2_iK-zJVfLwoVX4RMgysXejms';
+const TG_CHAT='565338476';
 function handlePreorder(){
   const name=document.getElementById('pName').value.trim();
   const tg=document.getElementById('pTg').value.trim();
@@ -568,10 +569,16 @@ function handlePreorder(){
   if(!tg){alert('Укажите Telegram');return}
   const btn=document.querySelector('.preorder-submit');
   btn.textContent='Отправляем...';btn.disabled=true;
-  const data={name,telegram:tg,date:new Date().toLocaleString('ru-RU')};
+  const date=new Date().toLocaleString('ru-RU');
+  const text=`🆕 Новый предзаказ LIP-NIK\n\n👤 Имя: ${name}\n📱 Telegram: ${tg}\n🕐 Дата: ${date}`;
   const saved=JSON.parse(localStorage.getItem('lipnik_leads')||'[]');
-  saved.push(data);localStorage.setItem('lipnik_leads',JSON.stringify(saved));
-  fetch(SHEET_URL,{method:'POST',body:JSON.stringify(data)}).catch(()=>{});
+  saved.push({name,telegram:tg,date});
+  localStorage.setItem('lipnik_leads',JSON.stringify(saved));
+  fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({chat_id:TG_CHAT,text})
+  }).catch(()=>{});
   setTimeout(()=>{
     document.getElementById('preorder-form').style.display='none';
     document.getElementById('preorder-success').style.display='block';
