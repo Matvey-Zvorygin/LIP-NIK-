@@ -177,6 +177,14 @@ nav.on-light .ham span{background:var(--ink)}
 .cg-divider{width:24px;height:1px;background:var(--border-dark);margin:0 auto 20px}
 .cg-desc{font-size:14px;font-weight:300;color:var(--text-muted-dark);line-height:1.78}
 
+/* ── COURSE STRIP ── */
+.course-strip{display:flex;align-items:center;gap:20px;margin-top:40px;padding:24px 28px;background:rgba(61,122,85,.08);border:1px solid rgba(61,122,85,.18);border-radius:4px}
+.cs-item{display:flex;flex-direction:column;gap:4px}
+.cs-dose{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--ink)}
+.cs-month{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted-light)}
+.cs-zero .cs-dose{color:var(--sage)}
+.cs-arrow{font-size:18px;color:var(--text-muted-light);opacity:.5}
+
 /* ── RECOGNITION ── */
 .recognition{background:var(--ink-2);display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;padding:128px 80px}
 .recognition .section-eyebrow{color:rgba(168,205,184,.65)}
@@ -333,7 +341,6 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
   <a href="#" class="nav-logo">LIP<em>·</em>NIK</a>
   <ul class="nav-links">
     <li><a href="#product">Продукт</a></li>
-    <li><a href="#how">Как работает</a></li>
     <li><a href="#recognition">Признание</a></li>
     <li><a href="#invest">Инвесторам</a></li>
     <li><a href="story.html">Наша история</a></li>
@@ -392,24 +399,10 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
     <div class="stat-l">глубинных интервью<br>с целевой аудиторией</div>
   </div>
   <div class="stat-cell rv d2">
-    <div class="stat-n">3</div>
-    <div class="stat-l">национальных проекта,<br>которые поддерживает LIP&#8209;NIK</div>
+    <div class="stat-n">87%</div>
+    <div class="stat-l">опрошенных курящих девушек<br>хотят бросить — но не могут</div>
   </div>
 </div>
-
-<!-- TREND -->
-<section class="trend" id="trend">
-  <div class="rv">
-    <p class="section-eyebrow">Тренд</p>
-    <h2 class="section-title">Курение стало<br><em>женским</em></h2>
-    <p class="section-body">Вейп и IQOS изменили рынок. Вкусы манго и клубники, красивые устройства, отсутствие запаха — они убрали последний барьер для женщин. Теперь курение — тренд.</p>
-  </div>
-  <div class="trend-cards rv">
-    <div class="tcard"><div class="tcard-icon">🍓</div><div class="tcard-text"><strong>Вкусы фруктов и десертов</strong><p>Сделали вейп привлекательным для аудитории, которая никогда не брала сигарету</p></div></div>
-    <div class="tcard"><div class="tcard-icon">✨</div><div class="tcard-text"><strong>Красивый дизайн устройств</strong><p>Вейп стал аксессуаром, частью образа — как помада или духи</p></div></div>
-    <div class="tcard"><div class="tcard-icon">📈</div><div class="tcard-text"><strong>Рост числа курящих женщин вдвое</strong><p>За 15 лет. Аудитория 18–35 — самая быстрорастущая</p></div></div>
-  </div>
-</section>
 
 <!-- PRODUCT -->
 <section class="product" id="product">
@@ -425,27 +418,13 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
       <div class="pstep"><div class="pstep-icon pi-r">💄</div><div class="pstep-body"><h4>Психологическая зависимость</h4><p>Моторика рук сохраняется. Ритуал замещается, а не ломается.</p></div></div>
       <div class="pstep"><div class="pstep-icon pi-a">📉</div><div class="pstep-body"><h4>Постепенное снижение</h4><p>Три помады: 4 мг → 2 мг → 0 мг. Организм привыкает без стресса.</p></div></div>
     </div>
-  </div>
-</section>
-
-<!-- MECHANISM -->
-<div class="mechanism" id="how">
-  <div class="mcard rv"><div class="mcard-line"></div><div class="mcard-num">01</div><div class="mcard-title">Нанесла — почувствовала эффект</div><div class="mcard-body">Активное вещество всасывается через слизистую губ за 5–7 минут. Тяга к сигарете исчезает — без дыма и без запаха.</div></div>
-  <div class="mcard rv d1"><div class="mcard-line"></div><div class="mcard-num">02</div><div class="mcard-title">Ритуал остаётся — зависимость уходит</div><div class="mcard-body">Рука привычно тянется к предмету. Мозг получает знакомый сигнал — без никотиновой ловушки.</div></div>
-  <div class="mcard rv d2"><div class="mcard-line"></div><div class="mcard-num">03</div><div class="mcard-title">Три месяца — и свобода</div><div class="mcard-body">Курс снижает дозу постепенно. К третьему месяцу — помада без никотина. Привычка осталась, зависимость исчезла.</div></div>
-</div>
-
-<!-- COURSE -->
-<section class="course">
-  <div class="rv">
-    <p class="section-eyebrow">Как работает курс</p>
-    <h2 class="section-title">4 → 2 → <em>0</em></h2>
-  </div>
-  <p class="course-sub rv">Три помады. Три месяца. Постепенный выход из зависимости.</p>
-  <div class="course-grid rv">
-    <div class="cgrid-item"><div class="cg-dot"></div><div class="cg-dose">4 мг</div><div class="cg-phase">Старт · Месяц 1</div><div class="cg-divider"></div><div class="cg-desc">Высокая доза. Полное замещение сигареты. Ритуал сохраняется.</div></div>
-    <div class="cgrid-item"><div class="cg-dot"></div><div class="cg-dose">2 мг</div><div class="cg-phase">Снижение · Месяц 2</div><div class="cg-divider"></div><div class="cg-desc">Половинная доза. Тело адаптируется. Тяга снижается.</div></div>
-    <div class="cgrid-item"><div class="cg-dot"></div><div class="cg-dose">0 мг</div><div class="cg-phase">Финиш · Месяц 3</div><div class="cg-divider"></div><div class="cg-desc">Без никотина. Ритуал с вами. Зависимость — позади.</div></div>
+    <div class="course-strip rv">
+      <div class="cs-item"><span class="cs-dose">4 мг</span><span class="cs-month">Месяц 1 · Старт</span></div>
+      <div class="cs-arrow">→</div>
+      <div class="cs-item"><span class="cs-dose">2 мг</span><span class="cs-month">Месяц 2 · Снижение</span></div>
+      <div class="cs-arrow">→</div>
+      <div class="cs-item cs-zero"><span class="cs-dose">0 мг</span><span class="cs-month">Месяц 3 · Свобода</span></div>
+    </div>
   </div>
 </section>
 
@@ -684,7 +663,7 @@ ham.className = 'ham';
 ham.innerHTML = '<span></span><span></span><span></span>';
 const mmenu = document.createElement('div');
 mmenu.className = 'mmenu';
-mmenu.innerHTML = `<a href="#product">Продукт</a><a href="#how">Как работает</a><a href="#recognition">Признание</a><a href="#invest">Инвесторам</a><a href="story.html">Наша история</a><a href="#preorder" class="mm-cta">Предзаказ →</a>`;
+mmenu.innerHTML = `<a href="#product">Продукт</a><a href="#recognition">Признание</a><a href="#invest">Инвесторам</a><a href="story.html">Наша история</a><a href="#preorder" class="mm-cta">Предзаказ →</a>`;
 navEl.appendChild(ham);
 navEl.insertAdjacentElement('afterend', mmenu);
 ham.addEventListener('click', () => { ham.classList.toggle('open'); mmenu.classList.toggle('open'); });
