@@ -699,10 +699,23 @@ btt.addEventListener('click', () => lenis.scrollTo(0, {duration:1.4}));
 window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 600), {passive:true});
 
 // ── WAITLIST COUNTER ──
-(function(){
-  const extra = JSON.parse(localStorage.getItem('lipnik_leads') || '[]').length;
+const COUNTER_BASE = 183;
+const COUNTER_NS   = 'lipnik-waitlist-v1';
+const COUNTER_GET  = `https://api.countapi.xyz/get/${COUNTER_NS}/preorders`;
+const COUNTER_HIT  = `https://api.countapi.xyz/hit/${COUNTER_NS}/preorders`;
+
+function setCounterEl(val){
   const el = document.getElementById('waitlist-num');
-  if(el) el.textContent = 183 + extra;
+  if(el) el.textContent = COUNTER_BASE + Math.max(0, val || 0);
+}
+(async function loadCounter(){
+  try {
+    const r = await fetch(COUNTER_GET);
+    const d = await r.json();
+    setCounterEl(d.value);
+  } catch(e) {
+    setCounterEl(0);
+  }
 })();
 
 // ── PREORDER ──
@@ -717,13 +730,14 @@ function handlePreorder(){
   btn.textContent = 'Отправляем...'; btn.disabled = true;
   const date = new Date().toLocaleString('ru-RU');
   const text = `🆕 Новый предзаказ LIP-NIK\n\n👤 Имя: ${name}\n📱 Telegram: ${tg}\n🕐 Дата: ${date}`;
-  const saved = JSON.parse(localStorage.getItem('lipnik_leads') || '[]');
-  saved.push({name, telegram:tg, date});
-  localStorage.setItem('lipnik_leads', JSON.stringify(saved));
   fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({chat_id:TG_CHAT, text})
   }).catch(()=>{});
+  fetch(COUNTER_HIT)
+    .then(r => r.json())
+    .then(d => setCounterEl(d.value))
+    .catch(()=>{ const el=document.getElementById('waitlist-num'); if(el) el.textContent=parseInt(el.textContent)+1; });
   setTimeout(() => {
     document.getElementById('preorder-form').style.display = 'none';
     document.getElementById('preorder-success').style.display = 'block';
