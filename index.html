@@ -371,17 +371,6 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
   .footer-bottom{flex-direction:column;gap:12px;text-align:center}
 }
 
-/* ── CUSTOM CURSOR ── */
-.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;mix-blend-mode:difference;transform:translate(-50%,-50%);will-change:transform}
-.cursor-dot{width:6px;height:6px;background:#fff;transition:width .25s cubic-bezier(.4,0,.2,1),height .25s cubic-bezier(.4,0,.2,1),opacity .2s}
-.cursor-ring{width:36px;height:36px;border:1px solid rgba(255,255,255,.55);transition:width .3s cubic-bezier(.4,0,.2,1),height .3s cubic-bezier(.4,0,.2,1),border-color .25s,opacity .2s}
-.cursor-dot.hovering{width:0;height:0;opacity:0}
-.cursor-ring.hovering{width:64px;height:64px;border-color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
-@media (hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
-
-/* ── MAGNETIC BUTTON (wrapper for transform) ── */
-.magnet-inner{display:inline-block;transition:transform .35s cubic-bezier(.25,.1,.25,1)}
-
 /* ── SECTION TRANSITIONS (subtle gradient blend) ── */
 .manifesto{position:relative}
 .manifesto::before{content:'';position:absolute;top:0;inset-inline:0;height:80px;background:linear-gradient(to bottom,rgba(13,13,15,.18),transparent);pointer-events:none}
@@ -805,70 +794,11 @@ function toggleFaq(el){
   if(!isOpen) item.classList.add('open');
 }
 
-// ══════════════════════════════════════════════════════════════════
-// PREMIUM LAYER: cursor + magnetic buttons + 3D-tilt
-// (отключается на тач-устройствах через media query)
-// ══════════════════════════════════════════════════════════════════
-const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-if (isFinePointer) {
-  // ── 1. КАСТОМНЫЙ КУРСОР (точка + кольцо, mix-blend-mode: difference) ──
-  const cDot  = document.createElement('div'); cDot.className  = 'cursor-dot';
-  const cRing = document.createElement('div'); cRing.className = 'cursor-ring';
-  document.body.appendChild(cDot); document.body.appendChild(cRing);
-
-  let mx = window.innerWidth/2, my = window.innerHeight/2;
-  let rx = mx, ry = my; // позиция кольца с отставанием для эффекта инерции
-  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-  function tickCursor(){
-    cDot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-    // кольцо с лёгкой инерцией (lerp)
-    rx += (mx - rx) * 0.18;
-    ry += (my - ry) * 0.18;
-    cRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(tickCursor);
-  }
-  tickCursor();
-
-  // увеличение кольца при наведении на интерактивные элементы
-  const interactiveSel = 'a, button, .faq-q, .pstep, .rcard, .mcard, .scard, .tcard, .form-field, .ham';
-  document.querySelectorAll(interactiveSel).forEach(el => {
-    el.addEventListener('mouseenter', () => { cDot.classList.add('hovering'); cRing.classList.add('hovering'); });
-    el.addEventListener('mouseleave', () => { cDot.classList.remove('hovering'); cRing.classList.remove('hovering'); });
+// ── 3D-TILT на продуктовых изображениях (лёгкий, без курсора и магнита) ──
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && typeof VanillaTilt !== 'undefined') {
+  VanillaTilt.init(document.querySelectorAll('#hero-img, .product-visual img'), {
+    max: 5, speed: 700, glare: true, 'max-glare': 0.12, scale: 1.015, perspective: 1400,
   });
-
-  // ── 2. MAGNETIC BUTTONS (магнетический эффект притяжения к курсору) ──
-  // оборачиваем содержимое кнопок в span.magnet-inner, чтобы не конфликтовать с :hover transform
-  document.querySelectorAll('.btn-rose, .btn-outline-dark, .nav-btn, .form-submit').forEach(btn => {
-    // оборачиваем содержимое в .magnet-inner
-    const inner = document.createElement('span');
-    inner.className = 'magnet-inner';
-    while (btn.firstChild) inner.appendChild(btn.firstChild);
-    btn.appendChild(inner);
-    btn.style.position = btn.style.position || 'relative';
-
-    const strength = 0.32; // сила притяжения (0..1)
-    btn.addEventListener('mousemove', e => {
-      const rect = btn.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width/2)  * strength;
-      const y = (e.clientY - rect.top  - rect.height/2) * strength;
-      inner.style.transform = `translate(${x}px, ${y}px)`;
-    });
-    btn.addEventListener('mouseleave', () => { inner.style.transform = ''; });
-  });
-
-  // ── 3. VANILLA-TILT (3D-наклон на продуктовых изображениях) ──
-  if (typeof VanillaTilt !== 'undefined') {
-    VanillaTilt.init(document.querySelectorAll('#hero-img, .product-visual img'), {
-      max: 6,           // максимальный угол наклона (градусы)
-      speed: 600,       // скорость возврата
-      glare: true,      // блик света
-      'max-glare': 0.18,
-      scale: 1.02,
-      perspective: 1200,
-    });
-  }
 }
 </script>
 </body>
