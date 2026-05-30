@@ -95,7 +95,10 @@ nav.on-light .ham span{background:var(--ink)}
 
 /* ── HERO ── */
 .hero{min-height:100vh;background:var(--ink);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:74px;position:relative;overflow:hidden}
-.hero-orb{position:absolute;border-radius:50%;pointer-events:none}
+.hero::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.88 0 0 0 0 0.85 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");opacity:.07;pointer-events:none;mix-blend-mode:overlay;z-index:0}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 50%,rgba(196,92,114,.04) 0%,transparent 65%),radial-gradient(ellipse 50% 60% at 75% 60%,rgba(61,122,85,.035) 0%,transparent 60%);pointer-events:none;z-index:0}
+.hero > *{position:relative;z-index:1}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
 .hero-orb.o1{width:720px;height:720px;background:radial-gradient(circle,rgba(196,92,114,.13) 0%,transparent 65%);top:50%;right:-60px;transform:translateY(-50%)}
 .hero-orb.o2{width:380px;height:380px;background:radial-gradient(circle,rgba(61,122,85,.09) 0%,transparent 65%);bottom:-80px;left:-80px}
 .hero-left{padding:80px 56px 80px 80px;position:relative;z-index:1}
@@ -160,14 +163,16 @@ nav.on-light .ham span{background:var(--ink)}
 .product-visual:hover img{transform:scale(1.035) translateY(-6px)}
 .product-content{padding:104px 80px;display:flex;flex-direction:column;justify-content:center}
 .psteps{margin-top:48px;display:flex;flex-direction:column}
-.pstep{display:flex;gap:22px;padding:24px 0;border-bottom:1px solid var(--border-light);align-items:flex-start}
+.pstep{display:flex;gap:28px;padding:28px 0;border-bottom:1px solid var(--border-light);align-items:flex-start;transition:padding-left .3s}
 .pstep:last-child{border-bottom:none}
-.pstep-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-.pi-g{background:rgba(61,122,85,.1)}
-.pi-r{background:rgba(196,92,114,.1)}
-.pi-a{background:rgba(196,134,58,.1)}
-.pstep-body h4{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;color:var(--ink)}
-.pstep-body p{font-size:14px;color:var(--text-muted-light);line-height:1.7}
+.pstep:hover{padding-left:8px}
+.pstep-num{font-family:var(--serif);font-size:32px;font-weight:300;font-style:italic;line-height:1;flex-shrink:0;width:60px;position:relative;padding-bottom:6px}
+.pstep-num::after{content:'';position:absolute;bottom:0;left:0;width:32px;height:1px;background:currentColor;opacity:.35}
+.pstep-num.pn-g{color:var(--sage)}
+.pstep-num.pn-r{color:var(--rose)}
+.pstep-num.pn-a{color:var(--gold)}
+.pstep-body h4{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;color:var(--ink)}
+.pstep-body p{font-size:15px;font-weight:300;color:var(--text-muted-light);line-height:1.75}
 
 /* ── MECHANISM ── */
 .mechanism{display:grid;grid-template-columns:repeat(3,1fr);background:var(--cream)}
@@ -219,11 +224,20 @@ nav.on-light .ham span{background:var(--ink)}
 .qtext{font-family:var(--serif);font-size:19px;font-weight:300;font-style:italic;line-height:1.75;color:var(--cream);margin-bottom:24px}
 .qauthor{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted-dark)}
 .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.rcard{padding:28px;border:1px solid var(--border-dark);background:rgba(255,255,255,.025);transition:border-color .28s,background .28s}
-.rcard:hover{border-color:rgba(61,122,85,.3);background:rgba(61,122,85,.04)}
-.rcard-tag{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(168,205,184,.55);margin-bottom:10px}
-.rcard-title{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--cream);margin-bottom:8px}
-.rcard-body{font-size:13px;font-weight:300;color:var(--text-muted-dark);line-height:1.68}
+.rcard{padding:30px 28px;border:1px solid var(--border-dark);background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,rgba(255,255,255,.005) 100%);transition:transform .35s cubic-bezier(.4,0,.2,1),border-color .28s,background .28s;position:relative;overflow:hidden}
+.rcard::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--sage-light),transparent);opacity:.55;transition:opacity .3s}
+.rcard:hover{transform:translateY(-3px);border-color:rgba(168,205,184,.28);background:linear-gradient(135deg,rgba(168,205,184,.06) 0%,rgba(168,205,184,.01) 100%)}
+.rcard:hover::before{opacity:1}
+.rcard-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.rcard-mark{width:22px;height:22px;border:1px solid rgba(168,205,184,.32);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(168,205,184,.7);flex-shrink:0}
+.rcard-mark svg{width:11px;height:11px;display:block}
+.rcard-tag{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(168,205,184,.55);font-weight:500}
+.rcard-title{font-family:var(--serif);font-size:21px;font-weight:400;color:var(--cream);margin-bottom:10px;letter-spacing:-.3px}
+.rcard-body{font-size:13.5px;font-weight:300;color:var(--text-muted-dark);line-height:1.7}
+.rcard.rcard-partner::before{background:linear-gradient(to bottom,var(--gold),transparent)}
+.rcard.rcard-partner .rcard-mark{border-color:rgba(196,134,58,.32);color:rgba(196,134,58,.8)}
+.rcard.rcard-partner .rcard-tag{color:rgba(196,134,58,.7)}
+.rcard.rcard-partner:hover{border-color:rgba(196,134,58,.28);background:linear-gradient(135deg,rgba(196,134,58,.05) 0%,rgba(196,134,58,.01) 100%)}
 
 /* ── STATUS ── */
 .status-section{background:var(--cream);padding:128px 80px}
@@ -438,9 +452,9 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
     <h2 class="section-title">Медпрепарат,<br>не просто <em>косметика</em></h2>
     <p class="section-body">Никотин доставляется через слизистую губ за 5–7 минут. Без дыма. Без запаха. Без канцерогенов.</p>
     <div class="psteps">
-      <div class="pstep"><div class="pstep-icon pi-g">💊</div><div class="pstep-body"><h4>Физическая зависимость</h4><p>Контролируемая доза никотина — быстро и без вреда. Тяга проходит за 5–7 минут.</p></div></div>
-      <div class="pstep"><div class="pstep-icon pi-r">💄</div><div class="pstep-body"><h4>Психологическая зависимость</h4><p>Моторика рук сохраняется. Ритуал замещается, а не ломается.</p></div></div>
-      <div class="pstep"><div class="pstep-icon pi-a">📉</div><div class="pstep-body"><h4>Постепенное снижение</h4><p>Три помады: 4 мг → 2 мг → 0 мг. Организм привыкает без стресса.</p></div></div>
+      <div class="pstep"><div class="pstep-num pn-g">01</div><div class="pstep-body"><h4>Физическая зависимость</h4><p>Контролируемая доза никотина — быстро и без вреда. Тяга проходит за 5–7 минут.</p></div></div>
+      <div class="pstep"><div class="pstep-num pn-r">02</div><div class="pstep-body"><h4>Психологическая зависимость</h4><p>Моторика рук сохраняется. Ритуал замещается, а не ломается.</p></div></div>
+      <div class="pstep"><div class="pstep-num pn-a">03</div><div class="pstep-body"><h4>Постепенное снижение</h4><p>Три помады: 4 мг → 2 мг → 0 мг. Организм привыкает без стресса.</p></div></div>
     </div>
     <div class="course-strip rv">
       <div class="cs-item"><span class="cs-dose">4 мг</span><span class="cs-month">Месяц 1 · Старт</span></div>
@@ -465,10 +479,10 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
     </div>
   </div>
   <div class="rec-grid rv">
-    <div class="rcard"><div class="rcard-tag">Нацпроект</div><div class="rcard-title">«Семья»</div><div class="rcard-body">Снижение курения среди женщин 18–35 — прямой вклад в рождаемость</div></div>
-    <div class="rcard"><div class="rcard-tag">Нацпроект</div><div class="rcard-title">«Долгая жизнь»</div><div class="rcard-body">Курение — главный барьер к цели 78 лет к 2030 году</div></div>
-    <div class="rcard"><div class="rcard-tag">Нацпроект</div><div class="rcard-title">«Новые технологии»</div><div class="rcard-body">Первый отечественный медпрепарат НЗТ. Суверенитет в фармацевтике</div></div>
-    <div class="rcard"><div class="rcard-tag">Партнёр</div><div class="rcard-title">РОС-Химия</div><div class="rcard-body">30 лет опыта. Лаборатория биологии кожи. Клиенты — Unilever, Avon</div></div>
+    <div class="rcard"><div class="rcard-head"><span class="rcard-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg></span><span class="rcard-tag">Нацпроект</span></div><div class="rcard-title">«Семья»</div><div class="rcard-body">Снижение курения среди женщин 18–35 — прямой вклад в рождаемость</div></div>
+    <div class="rcard"><div class="rcard-head"><span class="rcard-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="rcard-tag">Нацпроект</span></div><div class="rcard-title">«Долгая жизнь»</div><div class="rcard-body">Курение — главный барьер к цели 78 лет к 2030 году</div></div>
+    <div class="rcard"><div class="rcard-head"><span class="rcard-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><span class="rcard-tag">Нацпроект</span></div><div class="rcard-title">«Новые технологии»</div><div class="rcard-body">Первый отечественный медпрепарат НЗТ. Суверенитет в фармацевтике</div></div>
+    <div class="rcard rcard-partner"><div class="rcard-head"><span class="rcard-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15.09 8.26 22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><span class="rcard-tag">Партнёр</span></div><div class="rcard-title">РОС-Химия</div><div class="rcard-body">30 лет опыта. Лаборатория биологии кожи. Клиенты — Unilever, Avon</div></div>
   </div>
 </section>
 
