@@ -106,6 +106,8 @@ nav.on-light .ham span{background:var(--ink)}
 .hero-tag::before{content:'';width:28px;height:1px;background:var(--rose);flex-shrink:0}
 .hero-h1{font-family:var(--serif);font-size:clamp(62px,6.6vw,104px);font-weight:300;line-height:1.02;letter-spacing:-3px;color:var(--cream);margin-bottom:28px}
 .hero-h1 em{font-style:italic;color:var(--rose)}
+.h1-line{display:block;overflow:hidden;padding-bottom:.06em}
+.h1-word{display:inline-block;transform:translateY(110%);will-change:transform}
 .hero-sub{font-size:16px;font-weight:300;line-height:1.85;color:var(--text-muted-dark);max-width:380px;margin-bottom:48px}
 .hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
 .btn-rose{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--rose);padding:16px 40px;border:none;cursor:pointer;text-decoration:none;transition:all .3s;display:inline-block;border-radius:2px;position:relative;overflow:hidden}
@@ -368,6 +370,33 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
   .footer-top{grid-template-columns:1fr 1fr;gap:36px}
   .footer-bottom{flex-direction:column;gap:12px;text-align:center}
 }
+
+/* ── CUSTOM CURSOR ── */
+.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;mix-blend-mode:difference;transform:translate(-50%,-50%);will-change:transform}
+.cursor-dot{width:6px;height:6px;background:#fff;transition:width .25s cubic-bezier(.4,0,.2,1),height .25s cubic-bezier(.4,0,.2,1),opacity .2s}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(255,255,255,.55);transition:width .3s cubic-bezier(.4,0,.2,1),height .3s cubic-bezier(.4,0,.2,1),border-color .25s,opacity .2s}
+.cursor-dot.hovering{width:0;height:0;opacity:0}
+.cursor-ring.hovering{width:64px;height:64px;border-color:rgba(255,255,255,.85);background:rgba(255,255,255,.04)}
+@media (hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
+
+/* ── MAGNETIC BUTTON (wrapper for transform) ── */
+.magnet-inner{display:inline-block;transition:transform .35s cubic-bezier(.25,.1,.25,1)}
+
+/* ── SECTION TRANSITIONS (subtle gradient blend) ── */
+.manifesto{position:relative}
+.manifesto::before{content:'';position:absolute;top:0;inset-inline:0;height:80px;background:linear-gradient(to bottom,rgba(13,13,15,.18),transparent);pointer-events:none}
+.product{position:relative}
+.product::before{content:'';position:absolute;top:0;inset-inline:0;height:60px;background:linear-gradient(to bottom,rgba(13,13,15,.08),transparent);pointer-events:none}
+.recognition{position:relative}
+.recognition::before{content:'';position:absolute;top:0;inset-inline:0;height:80px;background:linear-gradient(to bottom,rgba(250,249,247,.04),transparent);pointer-events:none}
+.status-section{position:relative}
+.status-section::before{content:'';position:absolute;top:0;inset-inline:0;height:60px;background:linear-gradient(to bottom,rgba(13,13,15,.08),transparent);pointer-events:none}
+.invest{position:relative}
+.invest::before{content:'';position:absolute;top:0;inset-inline:0;height:80px;background:linear-gradient(to bottom,rgba(250,249,247,.04),transparent);pointer-events:none}
+.faq{position:relative}
+.faq::before{content:'';position:absolute;top:0;inset-inline:0;height:60px;background:linear-gradient(to bottom,rgba(13,13,15,.08),transparent);pointer-events:none}
+.preorder{position:relative}
+.preorder::before{content:'';position:absolute;top:0;inset-inline:0;height:80px;background:linear-gradient(to bottom,rgba(250,249,247,.04),transparent);pointer-events:none;z-index:2}
 </style>
 </head>
 <body>
@@ -392,7 +421,10 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
   <div class="hero-orb o2"></div>
   <div class="hero-left">
     <p class="hero-tag">Первый в России препарат от курения в формате помады</p>
-    <h1 class="hero-h1">Бросить курить —<br>теперь <em>по&#8209;женски</em></h1>
+    <h1 class="hero-h1" aria-label="Бросить курить — теперь по-женски">
+      <span class="h1-line"><span class="h1-word">Бросить</span> <span class="h1-word">курить</span></span>
+      <span class="h1-line"><span class="h1-word">теперь</span> <span class="h1-word"><em>по&#8209;женски</em></span></span>
+    </h1>
     <p class="hero-sub">Никотиновая помада нового поколения. Никотинозаместительная терапия, которая работает с зависимостью и ритуалом одновременно.</p>
     <div class="hero-btns">
       <a href="#preorder" class="btn-rose">Оставить предзаказ</a>
@@ -600,6 +632,8 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <!-- Lenis smooth scroll -->
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<!-- Vanilla-Tilt: 3D-tilt эффект на продуктах -->
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
 
 <script>
 // ── LENIS SMOOTH SCROLL ──
@@ -623,16 +657,17 @@ function updateNav(){
 }
 window.addEventListener('scroll', updateNav, {passive:true});
 
-// ── HERO ENTRANCE (GSAP) ──
-gsap.set(['.hero-tag','.hero-h1','.hero-sub','.hero-btns','.hero-badges'], {opacity:0, y:32});
+// ── HERO ENTRANCE (GSAP) — Split-text reveal for H1 ──
+gsap.set(['.hero-tag','.hero-sub','.hero-btns','.hero-badges'], {opacity:0, y:32});
 gsap.set('#hero-img', {opacity:0, scale:.94});
 gsap.set('.hero-scroll-indicator', {opacity:0});
 
 const heroTl = gsap.timeline({delay:.15});
 heroTl
   .to('.hero-tag',   {opacity:1, y:0, duration:.75, ease:'power3.out'})
-  .to('.hero-h1',    {opacity:1, y:0, duration:1,   ease:'power3.out'}, '<.18')
-  .to('.hero-sub',   {opacity:1, y:0, duration:.8,  ease:'power3.out'}, '<.25')
+  // Каждое слово появляется отдельно из-под маски (mask reveal)
+  .to('.h1-word',    {y:'0%', duration:1.05, ease:'power4.out', stagger:.08}, '<.15')
+  .to('.hero-sub',   {opacity:1, y:0, duration:.8,  ease:'power3.out'}, '<.5')
   .to('.hero-btns',  {opacity:1, y:0, duration:.7,  ease:'power3.out'}, '<.2')
   .to('.hero-badges',{opacity:1, y:0, duration:.6,  ease:'power3.out'}, '<.15')
   .to('#hero-img',   {opacity:1, scale:1, duration:1.3, ease:'power3.out'}, .1)
@@ -768,6 +803,72 @@ function toggleFaq(el){
   const isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
   if(!isOpen) item.classList.add('open');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PREMIUM LAYER: cursor + magnetic buttons + 3D-tilt
+// (отключается на тач-устройствах через media query)
+// ══════════════════════════════════════════════════════════════════
+const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+if (isFinePointer) {
+  // ── 1. КАСТОМНЫЙ КУРСОР (точка + кольцо, mix-blend-mode: difference) ──
+  const cDot  = document.createElement('div'); cDot.className  = 'cursor-dot';
+  const cRing = document.createElement('div'); cRing.className = 'cursor-ring';
+  document.body.appendChild(cDot); document.body.appendChild(cRing);
+
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my; // позиция кольца с отставанием для эффекта инерции
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  function tickCursor(){
+    cDot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+    // кольцо с лёгкой инерцией (lerp)
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    cRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(tickCursor);
+  }
+  tickCursor();
+
+  // увеличение кольца при наведении на интерактивные элементы
+  const interactiveSel = 'a, button, .faq-q, .pstep, .rcard, .mcard, .scard, .tcard, .form-field, .ham';
+  document.querySelectorAll(interactiveSel).forEach(el => {
+    el.addEventListener('mouseenter', () => { cDot.classList.add('hovering'); cRing.classList.add('hovering'); });
+    el.addEventListener('mouseleave', () => { cDot.classList.remove('hovering'); cRing.classList.remove('hovering'); });
+  });
+
+  // ── 2. MAGNETIC BUTTONS (магнетический эффект притяжения к курсору) ──
+  // оборачиваем содержимое кнопок в span.magnet-inner, чтобы не конфликтовать с :hover transform
+  document.querySelectorAll('.btn-rose, .btn-outline-dark, .nav-btn, .form-submit').forEach(btn => {
+    // оборачиваем содержимое в .magnet-inner
+    const inner = document.createElement('span');
+    inner.className = 'magnet-inner';
+    while (btn.firstChild) inner.appendChild(btn.firstChild);
+    btn.appendChild(inner);
+    btn.style.position = btn.style.position || 'relative';
+
+    const strength = 0.32; // сила притяжения (0..1)
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width/2)  * strength;
+      const y = (e.clientY - rect.top  - rect.height/2) * strength;
+      inner.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { inner.style.transform = ''; });
+  });
+
+  // ── 3. VANILLA-TILT (3D-наклон на продуктовых изображениях) ──
+  if (typeof VanillaTilt !== 'undefined') {
+    VanillaTilt.init(document.querySelectorAll('#hero-img, .product-visual img'), {
+      max: 6,           // максимальный угол наклона (градусы)
+      speed: 600,       // скорость возврата
+      glare: true,      // блик света
+      'max-glare': 0.18,
+      scale: 1.02,
+      perspective: 1200,
+    });
+  }
 }
 </script>
 </body>
