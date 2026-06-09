@@ -306,6 +306,22 @@ nav.on-light .ham span{background:var(--ink)}
 .form-success{display:none;padding:28px;border:1px solid rgba(168,205,184,.2);background:rgba(168,205,184,.06);font-size:15px;color:var(--sage-light);line-height:1.8;border-radius:2px}
 .form-note{font-size:11px;color:rgba(255,255,255,.14);margin-top:16px;letter-spacing:.3px}
 
+/* ── PRICE SURVEY ── */
+.price-survey{background:var(--cream-2);padding:120px 80px;text-align:center;position:relative}
+.ps-inner{max-width:720px;margin:0 auto}
+.ps-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px}
+.ps-eyebrow::before,.ps-eyebrow::after{content:'';width:28px;height:1px;background:var(--rose);opacity:.45}
+.ps-title{font-family:var(--serif);font-size:clamp(36px,4.2vw,56px);font-weight:300;line-height:1.12;letter-spacing:-1.5px;color:var(--ink);margin-bottom:20px}
+.ps-title em{font-style:italic;color:var(--rose)}
+.ps-sub{font-size:15px;font-weight:300;color:var(--text-muted-light);line-height:1.78;max-width:480px;margin:0 auto 44px}
+.ps-options{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ps-option{font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:.4px;color:var(--ink);background:transparent;border:1px solid rgba(13,13,15,.16);padding:20px 16px;cursor:pointer;border-radius:2px;transition:all .28s cubic-bezier(.4,0,.2,1)}
+.ps-option:hover{border-color:var(--rose);color:var(--rose);transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,92,114,.12)}
+.ps-option.chosen{background:var(--rose);border-color:var(--rose);color:#fff;cursor:default;transform:translateY(-2px)}
+.ps-option:disabled{cursor:not-allowed}
+.ps-option:disabled:not(.chosen){opacity:.35}
+.ps-success{display:none;padding:24px;border:1px solid rgba(61,122,85,.22);background:rgba(61,122,85,.06);font-size:15px;color:var(--sage);line-height:1.7;border-radius:2px;margin-top:24px}
+
 /* ── FOOTER ── */
 footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68px 80px 44px}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:52px}
@@ -365,6 +381,8 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
   .invest{padding:88px 24px}
   .faq{padding:88px 24px}
   .preorder{padding:104px 24px}
+  .price-survey{padding:88px 24px}
+  .ps-options{grid-template-columns:1fr 1fr;gap:10px}
   .form-row{grid-template-columns:1fr}
   footer{padding:56px 24px 36px}
   .footer-top{grid-template-columns:1fr 1fr;gap:36px}
@@ -576,6 +594,22 @@ footer{background:var(--ink);border-top:1px solid var(--border-dark);padding:68p
   </div>
 </section>
 
+<!-- PRICE SURVEY -->
+<section class="price-survey" id="price-survey">
+  <div class="ps-inner">
+    <p class="ps-eyebrow rv">Опрос</p>
+    <h2 class="ps-title rv">Какую цену вы считаете <em>справедливой</em><br>за одну упаковку?</h2>
+    <p class="ps-sub rv">Ваш голос поможет нам определить честную стоимость. Анонимно. Без обязательств.</p>
+    <div class="ps-options rv" id="ps-options">
+      <button class="ps-option" data-price="до 1000 ₽">до 1000 ₽</button>
+      <button class="ps-option" data-price="1000–1500 ₽">1000–1500 ₽</button>
+      <button class="ps-option" data-price="1500–2000 ₽">1500–2000 ₽</button>
+      <button class="ps-option" data-price="больше 2000 ₽">больше 2000 ₽</button>
+    </div>
+    <div class="ps-success rv" id="ps-success">✓ Спасибо! Ваш голос учтён.</div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -784,6 +818,25 @@ function handlePreorder(){
 }
 document.querySelectorAll('.form-field').forEach(f => {
   f.addEventListener('keydown', e => { if(e.key === 'Enter') handlePreorder(); });
+});
+
+// ── PRICE SURVEY (отправляет ответ в тот же Telegram-бот) ──
+document.querySelectorAll('.ps-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const price = btn.dataset.price;
+    // блокируем остальные кнопки, выделяем выбранную
+    document.querySelectorAll('.ps-option').forEach(b => { b.disabled = true; if (b !== btn) b.classList.remove('chosen'); });
+    btn.classList.add('chosen');
+    // отправка в Telegram
+    const date = new Date().toLocaleString('ru-RU');
+    const text = `💰 Опрос цены LIP-NIK\n\n📊 Ответ: ${price}\n🕐 Дата: ${date}`;
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({chat_id:TG_CHAT, text})
+    }).catch(()=>{});
+    // показываем "спасибо" через короткую задержку
+    setTimeout(() => { document.getElementById('ps-success').style.display = 'block'; }, 350);
+  });
 });
 
 // ── FAQ ──
