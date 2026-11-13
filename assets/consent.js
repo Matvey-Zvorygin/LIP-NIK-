@@ -23,18 +23,21 @@
   }
 
   var css =
-    '#ln-cookie{position:fixed;left:24px;right:24px;bottom:24px;max-width:520px;margin-left:auto;z-index:9999;' +
-    'background:#fff;color:#4A3D47;border:1px solid rgba(46,34,48,.1);border-radius:24px;' +
-    'padding:24px 26px;font-family:Geologica,system-ui,sans-serif;font-weight:300;font-size:14px;line-height:1.6;' +
-    'box-shadow:0 30px 70px -30px rgba(120,60,80,.45);transform:translateY(16px);opacity:0;transition:all .35s}' +
+    '#ln-cookie{position:fixed;left:24px;right:48px;bottom:32px;max-width:520px;margin-left:auto;z-index:9999;' +
+    'background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);' +
+    'color:#4A4C52;border:1px solid rgba(22,23,26,.08);border-radius:22px;' +
+    'padding:20px 22px;font-family:"Onest Variable",system-ui,sans-serif;font-weight:400;font-size:13px;line-height:1.6;' +
+    'box-shadow:0 24px 60px -20px rgba(22,23,26,.25);transform:translateY(16px);opacity:0;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s}' +
     '#ln-cookie.show{transform:none;opacity:1}' +
-    '#ln-cookie a{color:#BE3F66}' +
-    '#ln-cookie .lc-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}' +
-    '#ln-cookie button{font-family:inherit;font-size:14px;font-weight:500;' +
-    'padding:13px 26px;border-radius:999px;cursor:pointer;border:1.5px solid rgba(46,34,48,.22);' +
-    'background:transparent;color:#2E2230}' +
-    '#ln-cookie button.lc-accept{background:#BE3F66;border-color:#BE3F66;color:#fff}' +
-    '@media(max-width:600px){#ln-cookie{left:12px;right:12px;bottom:12px}#ln-cookie button{flex:1}}';
+    '#ln-cookie a{color:#2F7C78;text-underline-offset:3px}' +
+    '#ln-cookie .lc-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}' +
+    '#ln-cookie button{font-family:inherit;font-size:13px;font-weight:500;' +
+    'padding:10px 20px;border-radius:999px;cursor:pointer;border:1px solid rgba(22,23,26,.14);' +
+    'background:transparent;color:#16171A;transition:background .2s,color .2s,border-color .2s}' +
+    '#ln-cookie button:hover{border-color:#16171A}' +
+    '#ln-cookie button.lc-accept{background:#16171A;border-color:#16171A;color:#fff}' +
+    '#ln-cookie button.lc-accept:hover{background:#2F7C78;border-color:#2F7C78}' +
+    '@media(max-width:600px){#ln-cookie{left:20px;right:20px;bottom:20px}#ln-cookie button{flex:1}}';
 
   function showBanner() {
     if (document.getElementById('ln-cookie')) return;
